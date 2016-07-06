@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.jbc.model.BUser;
 import com.jbc.service.IUserService;
@@ -18,11 +20,16 @@ import com.jbc.service.IUserService;
 public class UserController {
 	@Autowired
 	private IUserService userService;
-	@RequestMapping("/findAll")
-	public String findAll(HttpServletRequest req,HttpServletResponse res){
-		List<BUser> list = this.userService.findAll();
-		req.setAttribute("userList", list);
-		System.out.println(list);
+
+	@RequestMapping("/list")
+	public String tofindAll(HttpServletRequest req, HttpServletResponse res) {
 		return "userList";
+	}
+
+	@RequestMapping(value = "/list", method = RequestMethod.POST)
+	@ResponseBody
+	public List<BUser> findAll() {
+		List<BUser> list = this.userService.findAll();
+		return list;
 	}
 }

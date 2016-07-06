@@ -6,31 +6,49 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="/ssm/bootstrap.min.css">
 </head>
 <body>
-	<table>
+	<button id="search" class="btn btn-success">search</button>
+	<table
+		class="table table-striped table-borderedtable-condensed  table-hover">
 		<thead>
-			<tr>
-				<th>ID</th>
-				<th>用户名</th>
-				<th>密码</th>
-				<th>级别</th>
-				<th>描述</th>
-				<th>手机</th>
-				<th>地址</th>
-			</tr>
+			<th>ID</th>
+			<th>用户名</th>
+			<th>密码</th>
+			<th>级别</th>
+			<th>描述</th>
+			<th>手机</th>
+			<th>地址</th>
 		</thead>
-		<c:forEach items="${userList}" var="i">
-			<tr>	
-				<td><c:out value="${i.userId}" /></td>
-				<td><c:out value="${i.userName}" /></td>
-				<td><c:out value="${i.userPassword}" /></td>
-				<td><c:out value="${i.userLevel}" /></td>
-				<td><c:out value="${i.userDes}" /></td>
-				<td><c:out value="${i.userTel}" /></td>
-				<td><c:out value="${i.userAddress}" /></td>
-			</tr>
-		</c:forEach>
+		<tbody id="tb"></tbody>
 	</table>
 </body>
+<script type="text/javascript" src="/ssm/jQuery-2.2.0.min.js"></script>
+<script type="text/javascript" src="/ssm/bootstrap.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('#search').bind('click', function() {
+			$.ajax({
+				type : 'post',
+				url : '/ssm/user/list',
+				success : function(data) {
+					var tbHtml="";
+					$.each(data, function(index, value) {
+						tbHtml+=("<tr>");
+						tbHtml+=("<td>" + value.userId + "</td>");
+						tbHtml+=("<td>" + value.userName + "</td>");
+						tbHtml+=("<td>" + value.userPassword + "</td>");
+						tbHtml+=("<td>" + value.userLevel + "</td>");
+						tbHtml+=("<td>" + value.userDes + "</td>");
+						tbHtml+=("<td>" + value.userTel + "</td>");
+						tbHtml+=("<td>" + value.userAddress + "</td>");
+						tbHtml+=("<tr>");
+					});
+					$('#tb').html(tbHtml);
+				}
+			});
+		});
+	});
+</script>
 </html>
