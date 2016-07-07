@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<a href="user/list">user</a>
+	<a href="user">user</a>
 </body>
 </html>

@@ -1,28 +1,30 @@
 package test;
 
-import org.junit.Test;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import java.util.UUID;
 
-import com.jbc.mapper.BUserMapper;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
 import com.jbc.model.BUser;
 import com.jbc.service.IUserService;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = { "classpath:spring.xml", "classpath:spring-mybatis.xml" })
 public class TestSSM {
+	@Autowired
+	private IUserService userService;
+
 	@Test
-	public void test() {
-		ApplicationContext ac = new ClassPathXmlApplicationContext(
-				new String[] { "classpath:spring.xml", "classpath:spring-mybatis.xml" });
-		IUserService userService = (IUserService)ac.getBean("userService");
-//		BUserMapper dao = ac.getBean(BUserMapper.class);
-//		BUser record = new BUser();
-//		record.setUserId(1);
-//		record.setUserName("季秉昌");
-//		dao.insert(record );
-		try {
-			userService.saveTest();
-		} catch (Exception e) {
-			e.printStackTrace();
+	public void testAdd() {
+		BUser user = new BUser();
+		for (int i = 0; i < 100; i++) {
+			user.setUserName(UUID.randomUUID().toString());
+			user.setUserPassword(UUID.randomUUID().toString());
+			userService.save(user);
 		}
+
 	}
 }

@@ -20,6 +20,7 @@
 			<th>描述</th>
 			<th>手机</th>
 			<th>地址</th>
+			<th>操作</th>
 		</thead>
 		<tbody id="tb"></tbody>
 	</table>
@@ -31,21 +32,33 @@
 		$('#search').bind('click', function() {
 			$.ajax({
 				type : 'post',
-				url : '/ssm/user/list',
+				url : '/ssm/user',
 				success : function(data) {
-					var tbHtml="";
+					var tbHtml = "";
 					$.each(data, function(index, value) {
-						tbHtml+=("<tr>");
-						tbHtml+=("<td>" + value.userId + "</td>");
-						tbHtml+=("<td>" + value.userName + "</td>");
-						tbHtml+=("<td>" + value.userPassword + "</td>");
-						tbHtml+=("<td>" + value.userLevel + "</td>");
-						tbHtml+=("<td>" + value.userDes + "</td>");
-						tbHtml+=("<td>" + value.userTel + "</td>");
-						tbHtml+=("<td>" + value.userAddress + "</td>");
-						tbHtml+=("<tr>");
+						tbHtml += ("<tr>");
+						tbHtml += ("<td>" + value.userId + "</td>");
+						tbHtml += ("<td>" + value.userName + "</td>");
+						tbHtml += ("<td>" + value.userPassword + "</td>");
+						tbHtml += ("<td>" + value.userLevel + "</td>");
+						tbHtml += ("<td>" + value.userDes + "</td>");
+						tbHtml += ("<td>" + value.userTel + "</td>");
+						tbHtml += ("<td>" + value.userAddress + "</td>");
+						tbHtml += ("<td><a name='deleteBtn' id='"+value.userId+"' class='btn btn-info'>删除</a></td>");
+						tbHtml += ("<tr>");
 					});
 					$('#tb').html(tbHtml);
+					$('a[name="deleteBtn"]').bind('click',function(){
+						$.ajax({
+							type:'delete',
+							url:'/ssm/user/'+$(this).attr('id'),
+							success:function(){
+								$('#search').click();
+								alert('删除成功');
+							}
+						});
+						
+					});
 				}
 			});
 		});
