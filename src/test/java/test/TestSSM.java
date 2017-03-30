@@ -5,8 +5,10 @@ import java.util.UUID;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.util.StringUtils;
 
 import com.jbc.model.BUser;
 import com.jbc.service.IUserService;
@@ -25,6 +27,11 @@ public class TestSSM {
 			user.setUserPassword(UUID.randomUUID().toString());
 			userService.save(user);
 		}
+	}
 
+	public static void main(String[] args) {
+		System.out.println(StringUtils.delete("adca", "a"))
+		
+		;
 	}
 }
