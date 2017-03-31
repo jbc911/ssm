@@ -5,6 +5,7 @@
 <%@include file="common.jsp"%>
 </head>
 <body>
-	<a href="user/list">userList</a>
+	<a href="user/list">userList</a></br>
+	<a href="score/list">scoreInfoList</a>
 </body>
 </html>

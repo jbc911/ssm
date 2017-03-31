@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jbc.mapper.ScoreInfoMapper">
+	<cache type="org.mybatis.caches.redis.RedisCache"></cache>
+	<resultMap id="BaseResultMap" type="com.jbc.entity.ScoreInfo">
+		<id column="id" jdbcType="INTEGER" property="id" />
+		<result column="no" jdbcType="VARCHAR" property="no" />
+		<result column="name" jdbcType="VARCHAR" property="name" />
+		<result column="grade" jdbcType="INTEGER" property="grade" />
+		<result column="clazz" jdbcType="INTEGER" property="clazz" />
+		<result column="math" jdbcType="DOUBLE" property="math" />
+		<result column="english" jdbcType="DOUBLE" property="english" />
+		<result column="chinese" jdbcType="DOUBLE" property="chinese" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value" item="listItem"
+										open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value" item="listItem"
+										open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		id, no, name, grade, clazz, math, english, chinese
+	</sql>
+	<select id="selectByExample" parameterType="com.jbc.entity.ScoreInfoExample"
+		resultMap="BaseResultMap">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from score_info
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey" parameterType="java.lang.Integer"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from score_info
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		score_info
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteByExample" parameterType="com.jbc.entity.ScoreInfoExample">
+		delete from score_info
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" keyColumn="id" keyProperty="id"
+		parameterType="com.jbc.entity.ScoreInfo" useGeneratedKeys="true">
+		insert into
+		score_info (no, name, grade,
+		clazz, math, english,
+		chinese)
+		values
+		(#{no,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
+		#{grade,jdbcType=INTEGER},
+		#{clazz,jdbcType=INTEGER},
+		#{math,jdbcType=DOUBLE}, #{english,jdbcType=DOUBLE},
+		#{chinese,jdbcType=DOUBLE})
+	</insert>
+	<insert id="insertSelective" keyColumn="id" keyProperty="id"
+		parameterType="com.jbc.entity.ScoreInfo" useGeneratedKeys="true">
+		insert into score_info
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="no != null">
+				no,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="grade != null">
+				grade,
+			</if>
+			<if test="clazz != null">
+				clazz,
+			</if>
+			<if test="math != null">
+				math,
+			</if>
+			<if test="english != null">
+				english,
+			</if>
+			<if test="chinese != null">
+				chinese,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="no != null">
+				#{no,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="grade != null">
+				#{grade,jdbcType=INTEGER},
+			</if>
+			<if test="clazz != null">
+				#{clazz,jdbcType=INTEGER},
+			</if>
+			<if test="math != null">
+				#{math,jdbcType=DOUBLE},
+			</if>
+			<if test="english != null">
+				#{english,jdbcType=DOUBLE},
+			</if>
+			<if test="chinese != null">
+				#{chinese,jdbcType=DOUBLE},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample" parameterType="com.jbc.entity.ScoreInfoExample"
+		resultType="java.lang.Integer">
+		select count(*) from score_info
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update score_info
+		<set>
+			<if test="record.id != null">
+				id = #{record.id,jdbcType=INTEGER},
+			</if>
+			<if test="record.no != null">
+				no = #{record.no,jdbcType=VARCHAR},
+			</if>
+			<if test="record.name != null">
+				name = #{record.name,jdbcType=VARCHAR},
+			</if>
+			<if test="record.grade != null">
+				grade = #{record.grade,jdbcType=INTEGER},
+			</if>
+			<if test="record.clazz != null">
+				clazz = #{record.clazz,jdbcType=INTEGER},
+			</if>
+			<if test="record.math != null">
+				math = #{record.math,jdbcType=DOUBLE},
+			</if>
+			<if test="record.english != null">
+				english = #{record.english,jdbcType=DOUBLE},
+			</if>
+			<if test="record.chinese != null">
+				chinese = #{record.chinese,jdbcType=DOUBLE},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update score_info
+		set id = #{record.id,jdbcType=INTEGER},
+		no =
+		#{record.no,jdbcType=VARCHAR},
+		name = #{record.name,jdbcType=VARCHAR},
+		grade = #{record.grade,jdbcType=INTEGER},
+		clazz =
+		#{record.clazz,jdbcType=INTEGER},
+		math =
+		#{record.math,jdbcType=DOUBLE},
+		english =
+		#{record.english,jdbcType=DOUBLE},
+		chinese =
+		#{record.chinese,jdbcType=DOUBLE}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective" parameterType="com.jbc.entity.ScoreInfo">
+		update score_info
+		<set>
+			<if test="no != null">
+				no = #{no,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="grade != null">
+				grade = #{grade,jdbcType=INTEGER},
+			</if>
+			<if test="clazz != null">
+				clazz = #{clazz,jdbcType=INTEGER},
+			</if>
+			<if test="math != null">
+				math = #{math,jdbcType=DOUBLE},
+			</if>
+			<if test="english != null">
+				english = #{english,jdbcType=DOUBLE},
+			</if>
+			<if test="chinese != null">
+				chinese = #{chinese,jdbcType=DOUBLE},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.jbc.entity.ScoreInfo">
+		update score_info
+		set no = #{no,jdbcType=VARCHAR},
+		name = #{name,jdbcType=VARCHAR},
+		grade
+		= #{grade,jdbcType=INTEGER},
+		clazz = #{clazz,jdbcType=INTEGER},
+		math =
+		#{math,jdbcType=DOUBLE},
+		english = #{english,jdbcType=DOUBLE},
+		chinese =
+		#{chinese,jdbcType=DOUBLE}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+</mapper>

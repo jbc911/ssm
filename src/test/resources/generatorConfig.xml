@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+
+	<classPathEntry
+		location="D:\maven\repository\mysql\mysql-connector-java\5.1.27\mysql-connector-java-5.1.27.jar" />
+	<context id="context1">
+		<commentGenerator>
+			<property name="suppressDate" value="true" />
+			<property name="suppressAllComments" value="true" />
+		</commentGenerator>
+		<jdbcConnection connectionURL="jdbc:mysql://localhost:3306/jbcdb?useUnicode=true"
+			driverClass="com.mysql.jdbc.Driver" password="admin" userId="root" />
+		<!-- 设置是否在getter方法中，对String类型字段调用trim()方法 -->
+		<javaModelGenerator targetPackage="com.jbc.entity"
+			targetProject="ssm">
+			<property name="trimStrings" value="true" />
+		</javaModelGenerator>
+		<sqlMapGenerator targetPackage="com.jbc.mapper.impl"
+			targetProject="ssm" />
+		<javaClientGenerator targetPackage="com.jbc.mapper"
+			targetProject="ssm" type="XMLMAPPER">
+		</javaClientGenerator>
+		<table tableName="score_info" enableCountByExample="true">
+			<generatedKey column="id" sqlStatement="JDBC" />
+		</table>
+	</context>
+</generatorConfiguration>
