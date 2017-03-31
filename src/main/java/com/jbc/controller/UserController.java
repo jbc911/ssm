@@ -13,27 +13,29 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.jbc.entity.Page;
 import com.jbc.model.BUser;
 import com.jbc.service.IUserService;
 
 @Controller
+@RequestMapping("/user")
 public class UserController {
 	@Autowired
 	private IUserService userService;
 
-	@RequestMapping("/user")
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public String tofindAll(HttpServletRequest req, HttpServletResponse res) {
 		return "userList";
 	}
 
-	@RequestMapping(value = "/user", method = RequestMethod.POST)
+	@RequestMapping(value = "/list", method = RequestMethod.POST)
 	@ResponseBody
-	public List<BUser> findAll() {
+	public Page findAll() {
 		List<BUser> list = this.userService.findAll();
-		return list;
+		return new Page(list.size(), list);
 	}
 
-	@RequestMapping(value = "/user/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/{id}/delete", method = RequestMethod.DELETE)
 	@ResponseBody
 	public void delete(@PathVariable("id") int id) {
 		this.userService.deleteById(id);

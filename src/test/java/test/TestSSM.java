@@ -10,7 +10,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.StringUtils;
 
-import com.jbc.model.BUser;
+import com.jbc.entity.BUser;
 import com.jbc.service.IUserService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
