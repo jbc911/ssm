@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.jbc.mapper.BUserMapper;
 import com.jbc.model.BUser;
 import com.jbc.service.IUserService;
+import com.jbc.util.CustomerContextHolder;
 
 @Service("userService")
 public class UserService implements IUserService {
@@ -32,7 +33,7 @@ public class UserService implements IUserService {
 	}
 
 	@Override
-	public void saveTest() throws Exception{
+	public void saveTest() throws Exception {
 		try {
 			// TODO 测试事务
 			deleteById(1);
@@ -40,7 +41,7 @@ public class UserService implements IUserService {
 			user.setUserId(2);
 			user.setUserName("测试事务");
 			save(user);
-			
+
 		} catch (Exception e) {
 			throw new RuntimeException();
 		}

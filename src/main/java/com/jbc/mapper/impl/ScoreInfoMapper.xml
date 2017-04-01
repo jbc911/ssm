@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jbc.mapper.ScoreInfoMapper">
-	<cache type="org.mybatis.caches.redis.RedisCache"></cache>
+	<!-- <cache type="org.mybatis.caches.redis.RedisCache"></cache> -->
 	<resultMap id="BaseResultMap" type="com.jbc.entity.ScoreInfo">
 		<id column="id" jdbcType="INTEGER" property="id" />
 		<result column="no" jdbcType="VARCHAR" property="no" />

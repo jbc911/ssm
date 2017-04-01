@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.jbc.entity.Page;
 import com.jbc.model.BUser;
 import com.jbc.service.IUserService;
+import com.jbc.util.CustomerContextHolder;
 
 @Controller
 @RequestMapping("/user")
@@ -40,4 +41,13 @@ public class UserController {
 	public void delete(@PathVariable("id") int id) {
 		this.userService.deleteById(id);
 	}
+
+	@RequestMapping(value = "/add/{name}", method = RequestMethod.GET)
+	@ResponseBody
+	public void add(@PathVariable("name") String name) {
+		BUser user = new BUser();
+		user.setUserName(name);
+		this.userService.save(user);
+	}
+
 }
