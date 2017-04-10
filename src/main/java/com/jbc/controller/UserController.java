@@ -1,22 +1,19 @@
 package com.jbc.controller;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.jbc.entity.BUser;
 import com.jbc.entity.Page;
-import com.jbc.model.BUser;
 import com.jbc.service.IUserService;
-import com.jbc.util.CustomerContextHolder;
 
 @Controller
 @RequestMapping("/user")
@@ -31,9 +28,8 @@ public class UserController {
 
 	@RequestMapping(value = "/list", method = RequestMethod.POST)
 	@ResponseBody
-	public Page findAll() {
-		List<BUser> list = this.userService.findAll();
-		return new Page(list.size(), list);
+	public Page findAll(@ModelAttribute Page page) {
+		return this.userService.findAll(page);
 	}
 
 	@RequestMapping(value = "/{id}/delete", method = RequestMethod.DELETE)

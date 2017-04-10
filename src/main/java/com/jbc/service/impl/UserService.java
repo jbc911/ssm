@@ -3,13 +3,14 @@ package com.jbc.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import com.github.pagehelper.PageHelper;
+import com.jbc.entity.BUser;
+import com.jbc.entity.BUserExample;
+import com.jbc.entity.Page;
 import com.jbc.mapper.BUserMapper;
-import com.jbc.model.BUser;
 import com.jbc.service.IUserService;
-import com.jbc.util.CustomerContextHolder;
 
 @Service("userService")
 public class UserService implements IUserService {
@@ -17,9 +18,12 @@ public class UserService implements IUserService {
 	private BUserMapper userMapper;
 
 	@Override
-	public List<BUser> findAll() {
-		List<BUser> list = this.userMapper.findAll();
-		return list;
+	public Page findAll(Page page) {
+		BUserExample example = new BUserExample();
+		com.github.pagehelper.Page<Object> startPage = PageHelper.startPage(page.getStart() / page.getLength() + 1,
+				page.getLength());
+		List<BUser> list = this.userMapper.selectByExample(example);
+		return new Page((int) startPage.getTotal(), list);
 	}
 
 	@Override

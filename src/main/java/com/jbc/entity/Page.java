@@ -17,6 +17,10 @@ public class Page {
 	private int recordsFiltered;
 	private List<?> data = new ArrayList<>();
 
+	public Page() {
+
+	}
+
 	public Page(int totalCount, List<?> data) {
 		super();
 		this.recordsTotal = totalCount;

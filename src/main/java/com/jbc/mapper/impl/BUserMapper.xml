@@ -1,120 +1,243 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.jbc.mapper.BUserMapper" >
-  <resultMap id="BaseResultMap" type="com.jbc.model.BUser" >
-    <id column="user_id" property="userId" jdbcType="INTEGER" />
-    <result column="user_name" property="userName" jdbcType="VARCHAR" />
-    <result column="user_password" property="userPassword" jdbcType="VARCHAR" />
-    <result column="user_level" property="userLevel" jdbcType="INTEGER" />
-    <result column="user_des" property="userDes" jdbcType="VARCHAR" />
-    <result column="user_tel" property="userTel" jdbcType="VARCHAR" />
-    <result column="user_address" property="userAddress" jdbcType="VARCHAR" />
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jbc.mapper.BUserMapper">
+  <resultMap id="BaseResultMap" type="com.jbc.entity.BUser">
+    <id column="user_Id" jdbcType="INTEGER" property="userId" />
+    <result column="user_Name" jdbcType="VARCHAR" property="userName" />
+    <result column="user_Password" jdbcType="VARCHAR" property="userPassword" />
+    <result column="user_Level" jdbcType="INTEGER" property="userLevel" />
+    <result column="user_Des" jdbcType="VARCHAR" property="userDes" />
+    <result column="user_Tel" jdbcType="VARCHAR" property="userTel" />
+    <result column="user_Address" jdbcType="VARCHAR" property="userAddress" />
   </resultMap>
-  <sql id="Base_Column_List" >
-    user_id, user_name, user_password, user_level, user_des, user_tel, user_address
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    user_Id, user_Name, user_Password, user_Level, user_Des, user_Tel, user_Address
+  </sql>
+  <select id="selectByExample" parameterType="com.jbc.entity.BUserExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from b_user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from b_user
-    where user_id = #{userId,jdbcType=INTEGER}
+    where user_Id = #{userId,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from b_user
-    where user_id = #{userId,jdbcType=INTEGER}
+    where user_Id = #{userId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.jbc.model.BUser" >
-    insert into b_user (user_id, user_name, user_password, 
-      user_level, user_des, user_tel, 
-      user_address)
+  <delete id="deleteByExample" parameterType="com.jbc.entity.BUserExample">
+    delete from b_user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jbc.entity.BUser">
+    insert into b_user (user_Id, user_Name, user_Password, 
+      user_Level, user_Des, user_Tel, 
+      user_Address)
     values (#{userId,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{userPassword,jdbcType=VARCHAR}, 
       #{userLevel,jdbcType=INTEGER}, #{userDes,jdbcType=VARCHAR}, #{userTel,jdbcType=VARCHAR}, 
       #{userAddress,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.jbc.model.BUser" >
+  <insert id="insertSelective" parameterType="com.jbc.entity.BUser">
     insert into b_user
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="userId != null" >
-        user_id,
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        user_Id,
       </if>
-      <if test="userName != null" >
-        user_name,
+      <if test="userName != null">
+        user_Name,
       </if>
-      <if test="userPassword != null" >
-        user_password,
+      <if test="userPassword != null">
+        user_Password,
       </if>
-      <if test="userLevel != null" >
-        user_level,
+      <if test="userLevel != null">
+        user_Level,
       </if>
-      <if test="userDes != null" >
-        user_des,
+      <if test="userDes != null">
+        user_Des,
       </if>
-      <if test="userTel != null" >
-        user_tel,
+      <if test="userTel != null">
+        user_Tel,
       </if>
-      <if test="userAddress != null" >
-        user_address,
+      <if test="userAddress != null">
+        user_Address,
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="userId != null" >
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
         #{userId,jdbcType=INTEGER},
       </if>
-      <if test="userName != null" >
+      <if test="userName != null">
         #{userName,jdbcType=VARCHAR},
       </if>
-      <if test="userPassword != null" >
+      <if test="userPassword != null">
         #{userPassword,jdbcType=VARCHAR},
       </if>
-      <if test="userLevel != null" >
+      <if test="userLevel != null">
         #{userLevel,jdbcType=INTEGER},
       </if>
-      <if test="userDes != null" >
+      <if test="userDes != null">
         #{userDes,jdbcType=VARCHAR},
       </if>
-      <if test="userTel != null" >
+      <if test="userTel != null">
         #{userTel,jdbcType=VARCHAR},
       </if>
-      <if test="userAddress != null" >
+      <if test="userAddress != null">
         #{userAddress,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.jbc.model.BUser" >
+  <select id="countByExample" parameterType="com.jbc.entity.BUserExample" resultType="java.lang.Integer">
+    select count(*) from b_user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
     update b_user
-    <set >
-      <if test="userName != null" >
-        user_name = #{userName,jdbcType=VARCHAR},
+    <set>
+      <if test="record.userId != null">
+        user_Id = #{record.userId,jdbcType=INTEGER},
       </if>
-      <if test="userPassword != null" >
-        user_password = #{userPassword,jdbcType=VARCHAR},
+      <if test="record.userName != null">
+        user_Name = #{record.userName,jdbcType=VARCHAR},
       </if>
-      <if test="userLevel != null" >
-        user_level = #{userLevel,jdbcType=INTEGER},
+      <if test="record.userPassword != null">
+        user_Password = #{record.userPassword,jdbcType=VARCHAR},
       </if>
-      <if test="userDes != null" >
-        user_des = #{userDes,jdbcType=VARCHAR},
+      <if test="record.userLevel != null">
+        user_Level = #{record.userLevel,jdbcType=INTEGER},
       </if>
-      <if test="userTel != null" >
-        user_tel = #{userTel,jdbcType=VARCHAR},
+      <if test="record.userDes != null">
+        user_Des = #{record.userDes,jdbcType=VARCHAR},
       </if>
-      <if test="userAddress != null" >
-        user_address = #{userAddress,jdbcType=VARCHAR},
+      <if test="record.userTel != null">
+        user_Tel = #{record.userTel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userAddress != null">
+        user_Address = #{record.userAddress,jdbcType=VARCHAR},
       </if>
     </set>
-    where user_id = #{userId,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.jbc.model.BUser" >
+  <update id="updateByExample" parameterType="map">
     update b_user
-    set user_name = #{userName,jdbcType=VARCHAR},
-      user_password = #{userPassword,jdbcType=VARCHAR},
-      user_level = #{userLevel,jdbcType=INTEGER},
-      user_des = #{userDes,jdbcType=VARCHAR},
-      user_tel = #{userTel,jdbcType=VARCHAR},
-      user_address = #{userAddress,jdbcType=VARCHAR}
-    where user_id = #{userId,jdbcType=INTEGER}
+    set user_Id = #{record.userId,jdbcType=INTEGER},
+      user_Name = #{record.userName,jdbcType=VARCHAR},
+      user_Password = #{record.userPassword,jdbcType=VARCHAR},
+      user_Level = #{record.userLevel,jdbcType=INTEGER},
+      user_Des = #{record.userDes,jdbcType=VARCHAR},
+      user_Tel = #{record.userTel,jdbcType=VARCHAR},
+      user_Address = #{record.userAddress,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
   </update>
-  <select id="findAll" resultMap="BaseResultMap">
-  	select * from b_user
-  </select>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jbc.entity.BUser">
+    update b_user
+    <set>
+      <if test="userName != null">
+        user_Name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userPassword != null">
+        user_Password = #{userPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="userLevel != null">
+        user_Level = #{userLevel,jdbcType=INTEGER},
+      </if>
+      <if test="userDes != null">
+        user_Des = #{userDes,jdbcType=VARCHAR},
+      </if>
+      <if test="userTel != null">
+        user_Tel = #{userTel,jdbcType=VARCHAR},
+      </if>
+      <if test="userAddress != null">
+        user_Address = #{userAddress,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where user_Id = #{userId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jbc.entity.BUser">
+    update b_user
+    set user_Name = #{userName,jdbcType=VARCHAR},
+      user_Password = #{userPassword,jdbcType=VARCHAR},
+      user_Level = #{userLevel,jdbcType=INTEGER},
+      user_Des = #{userDes,jdbcType=VARCHAR},
+      user_Tel = #{userTel,jdbcType=VARCHAR},
+      user_Address = #{userAddress,jdbcType=VARCHAR}
+    where user_Id = #{userId,jdbcType=INTEGER}
+  </update>
 </mapper>

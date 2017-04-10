@@ -21,7 +21,7 @@
 		<javaClientGenerator targetPackage="com.jbc.mapper"
 			targetProject="ssm" type="XMLMAPPER">
 		</javaClientGenerator>
-		<table tableName="score_info" enableCountByExample="true">
+		<table tableName="b_user" enableCountByExample="true">
 			<generatedKey column="id" sqlStatement="JDBC" />
 		</table>
 	</context>

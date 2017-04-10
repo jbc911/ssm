@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.github.pagehelper.PageHelper;
 import com.jbc.entity.Page;
 import com.jbc.entity.ScoreInfo;
 import com.jbc.entity.ScoreInfoExample;
@@ -29,10 +30,10 @@ public class ScoreInfoServiceImpl implements ScoreInfoService {
 				criteria.andMathEqualTo(scoreInfo.getMath());
 			}
 		}
-		int count = scoreInfoMapper.countByExample(example);
-		example.setOrderByClause(String.format("id limit %s,%s", page.getStart(), page.getLength()));
+		com.github.pagehelper.Page<Object> startPage = PageHelper.startPage(page.getStart() / page.getLength() + 1,
+				page.getLength());
 		List<ScoreInfo> list = scoreInfoMapper.selectByExample(example);
-		return new Page(count, list);
+		return new Page((int) startPage.getTotal(), list);
 	}
 
 	@Override

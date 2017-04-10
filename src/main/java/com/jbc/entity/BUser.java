@@ -1,4 +1,4 @@
-package com.jbc.model;
+package com.jbc.entity;
 
 public class BUser {
     private Integer userId;
@@ -70,11 +70,4 @@ public class BUser {
     public void setUserAddress(String userAddress) {
         this.userAddress = userAddress == null ? null : userAddress.trim();
     }
-
-	@Override
-	public String toString() {
-		return "BUser [userId=" + userId + ", userName=" + userName + ", userPassword=" + userPassword + ", userLevel="
-				+ userLevel + ", userDes=" + userDes + ", userTel=" + userTel + ", userAddress=" + userAddress + "]";
-	}
-    
 }

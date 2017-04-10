@@ -11,9 +11,8 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.util.StringUtils;
 
-import com.jbc.model.BUser;
+import com.jbc.entity.BUser;
 import com.jbc.service.IUserService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -38,13 +37,16 @@ public class TestSSM {
 			Connection conn = DriverManager.getConnection(
 					"jdbc:mysql://192.168.134.129:3306/jbcdb?useUnicode=true&characterEncoding=UTF-8", "root", "admin");
 			conn.setAutoCommit(false);
-			PreparedStatement ps = conn
-					.prepareStatement("insert into score_info(no,math,english,chinese) values(?,?,?,?)");
+			PreparedStatement ps = conn.prepareStatement(
+					"insert into score_info(no,math,english,chinese,name,grade,clazz) values(?,?,?,?,?,?,?)");
 			for (int i = 1; i <= 10000000; i++) {
 				ps.setString(1, "No." + i);
 				ps.setDouble(2, r.nextInt(100) + (r.nextBoolean() ? 0.5d : 1.0d));
 				ps.setDouble(3, r.nextInt(100) + (r.nextBoolean() ? 0.5d : 1.0d));
 				ps.setDouble(4, r.nextInt(100) + (r.nextBoolean() ? 0.5d : 1.0d));
+				ps.setString(5, ChineseName.next(r));
+				ps.setInt(6, r.nextInt(6) + 1);
+				ps.setInt(7, r.nextInt(10) + 1);
 				ps.addBatch();
 				if (i % 50000 == 0) {
 					System.out.println("提交50000");
