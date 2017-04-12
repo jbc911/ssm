@@ -8,18 +8,29 @@ import java.util.UUID;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.quartz.CronScheduleBuilder;
+import org.quartz.JobBuilder;
+import org.quartz.JobDetail;
+import org.quartz.JobKey;
+import org.quartz.Scheduler;
+import org.quartz.SchedulerException;
+import org.quartz.Trigger;
+import org.quartz.TriggerBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.jbc.entity.BUser;
 import com.jbc.service.IUserService;
+import com.jbc.service.impl.Test1;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:spring.xml", "classpath:spring-mybatis.xml" })
 public class TestSSM {
 	@Autowired
 	private IUserService userService;
+	@Autowired
+	private Scheduler scheduler;
 
 	@Test
 	public void testAdd() {
@@ -28,6 +39,28 @@ public class TestSSM {
 			user.setUserName(UUID.randomUUID().toString());
 			user.setUserPassword(UUID.randomUUID().toString());
 			userService.save(user);
+		}
+	}
+
+	@Test
+	public void testQuartz() {
+		JobDetail jobDetail = JobBuilder.newJob(Test1.class).withIdentity("test", "group").build();
+		CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule("0/5 * * * * ?");
+		Trigger trigger = TriggerBuilder.newTrigger().withIdentity("test", "group").withSchedule(scheduleBuilder)
+				.build();
+		try {
+			scheduler.scheduleJob(jobDetail, trigger);
+		} catch (SchedulerException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Test
+	public void testDelQuartz() {
+		try {
+			scheduler.deleteJob(new JobKey("test", "group"));
+		} catch (SchedulerException e) {
+			e.printStackTrace();
 		}
 	}
 
