@@ -7,6 +7,7 @@
 	<packaging>war</packaging>
 	<properties>
 		<spring.version>3.2.8.RELEASE</spring.version>
+		<quartz.version>2.2.1</quartz.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -115,6 +116,11 @@
 			<artifactId>spring-webmvc</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
 		<!-- springMVC end -->
 		<!-- spring4 end -->
 		<!-- redis缓存 -->
@@ -127,6 +133,17 @@
 			<groupId>com.github.pagehelper</groupId>
 			<artifactId>pagehelper</artifactId>
 			<version>5.0.1-beta</version>
+		</dependency>
+		<!-- quartz -->
+		<dependency>
+			<groupId>org.quartz-scheduler</groupId>
+			<artifactId>quartz</artifactId>
+			<version>${quartz.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.quartz-scheduler</groupId>
+			<artifactId>quartz-jobs</artifactId>
+			<version>${quartz.version}</version>
 		</dependency>
 	</dependencies>
 </project>
