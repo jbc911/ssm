@@ -129,11 +129,11 @@
 			<artifactId>mybatis-redis</artifactId>
 			<version>1.0.0-beta2</version>
 		</dependency>
-		<dependency>
+		<!-- <dependency>
 			<groupId>com.github.pagehelper</groupId>
 			<artifactId>pagehelper</artifactId>
 			<version>5.0.1-beta</version>
-		</dependency>
+		</dependency> -->
 		<!-- quartz -->
 		<dependency>
 			<groupId>org.quartz-scheduler</groupId>
